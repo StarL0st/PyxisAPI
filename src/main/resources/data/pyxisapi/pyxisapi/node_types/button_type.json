@@ -5,7 +5,7 @@
     {
       "id": "default",
       "type": "enum",
-      "values": ["released","pressed"],
+      "values": ["released", "pressed"],
       "default": "released"
     }
   ]

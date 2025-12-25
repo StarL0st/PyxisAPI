@@ -1,17 +1,20 @@
 package com.starl0stgaming.pyxisapi.data.node.type;
 
 import com.starl0stgaming.pyxisapi.PyxisAPI;
+import com.starl0stgaming.pyxisapi.data.handle.PyxisTypeHandle;
 import com.starl0stgaming.pyxisapi.data.node.type.data.PyxisType;
 import com.starl0stgaming.pyxisapi.data.node.validation.PyxisTypeValidator;
 import com.starl0stgaming.pyxisapi.data.node.validation.exception.PyxisInvalidTypeException;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PyxisTypeRegistry {
-    private final HashMap<ResourceLocation, PyxisType> types;
+    private final HashMap<ResourceLocation, PyxisTypeHandle> types;
 
     //validation
 
@@ -26,16 +29,21 @@ public class PyxisTypeRegistry {
 
     public void onReload(Map<ResourceLocation, PyxisType> map) {
         if(!this.validateData(map)) return;
-        this.types.clear();
-        this.types.putAll(map);
         this.propagateUpdate();
     }
 
     private boolean validateData(Map<ResourceLocation, PyxisType> map) {
         try {
-            map.values().forEach(PyxisTypeValidator::validateType);
+            Map<ResourceLocation, PyxisTypeHandle> temp = map.entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> PyxisTypeValidator.validateType(e.getValue())
+                    ));
+            this.types.clear();
+            this.types.putAll(temp);
             return true;
         } catch (PyxisInvalidTypeException e) {
+            PyxisAPI.LOGGER.error("Failed to validate Pyxis types: {}", e.getMessage(), e);
             return false;
         }
     }
@@ -48,7 +56,11 @@ public class PyxisTypeRegistry {
         PyxisAPI.LOGGER.info("[PyxisAPI] Loaded level event");
     }
 
-    public HashMap<ResourceLocation, PyxisType> getTypeMap() {
+    public HashMap<ResourceLocation, PyxisTypeHandle> getTypeMap() {
         return types;
+    }
+
+    public PyxisTypeHandle getType(ResourceLocation resourceLocation) {
+        return this.types.get(resourceLocation);
     }
 }
