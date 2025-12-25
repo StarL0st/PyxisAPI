@@ -1,0 +1,12 @@
+{
+  "type": "pyxisapi:button_type",
+  "interactions": ["click"],
+  "states": [
+    {
+      "id": "default",
+      "type": "enum",
+      "values": ["released","pressed"],
+      "default": "released"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "node": "pyxisapi:button",
+    "name": "Button",
+    "type": "pyxisapi:button_type"
+  },
+  "render": {
+    "states": {
+      "pressed": {
+        "model": "pyxisapi:model_button_pressed",
+        "custom_renderer": "pyxisapi:custom_renderer_placeholder"
+      },
+      "released": {
+        "model": "pyxisapi:model_button_pressed"
+      }
+    }
+  },
+  "hitbox": [
+    {
+      "id": "pyxisapi:button_click_hitbox",
+      "interaction": "click",
+      "aabb": [0.0, 0.0, 0.0, 1.0, 1.0, 1.0],
+      "on_interact": "press"
+    }
+  ]
+}
