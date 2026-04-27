@@ -14,7 +14,6 @@ public final class EnumStateDef implements PyxisStateDef {
         this.defaultValue = defaultValue;
     }
 
-
     @Override
     public String name() {
         return name;

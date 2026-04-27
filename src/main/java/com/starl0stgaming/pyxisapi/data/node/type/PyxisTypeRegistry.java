@@ -6,7 +6,7 @@ import com.starl0stgaming.pyxisapi.data.node.type.data.PyxisType;
 import com.starl0stgaming.pyxisapi.data.node.validation.PyxisTypeValidator;
 import com.starl0stgaming.pyxisapi.data.node.validation.exception.PyxisInvalidTypeException;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PyxisTypeRegistry {
-    private final HashMap<ResourceLocation, PyxisTypeHandle> types;
+    private final HashMap<Identifier, PyxisTypeHandle> types;
 
     //validation
 
@@ -27,14 +27,14 @@ public class PyxisTypeRegistry {
 
     }
 
-    public void onReload(Map<ResourceLocation, PyxisType> map) {
+    public void onReload(Map<Identifier, PyxisType> map) {
         if(!this.validateData(map)) return;
         this.propagateUpdate();
     }
 
-    private boolean validateData(Map<ResourceLocation, PyxisType> map) {
+    private boolean validateData(Map<Identifier, PyxisType> map) {
         try {
-            Map<ResourceLocation, PyxisTypeHandle> temp = map.entrySet().stream()
+            Map<Identifier, PyxisTypeHandle> temp = map.entrySet().stream()
                     .collect(Collectors.toMap(
                             Map.Entry::getKey,
                             e -> PyxisTypeValidator.validateType(e.getValue())
@@ -56,11 +56,11 @@ public class PyxisTypeRegistry {
         PyxisAPI.LOGGER.info("[PyxisAPI] Loaded level event");
     }
 
-    public HashMap<ResourceLocation, PyxisTypeHandle> getTypeMap() {
+    public HashMap<Identifier, PyxisTypeHandle> getTypeMap() {
         return types;
     }
 
-    public PyxisTypeHandle getType(ResourceLocation resourceLocation) {
-        return this.types.get(resourceLocation);
+    public PyxisTypeHandle getType(Identifier Identifier) {
+        return this.types.get(Identifier);
     }
 }

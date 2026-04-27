@@ -1,13 +1,10 @@
 package com.starl0stgaming.pyxisapi.data.node;
 
 import com.starl0stgaming.pyxisapi.PyxisAPI;
-import com.starl0stgaming.pyxisapi.data.handle.PyxisNodeHandle;
-import com.starl0stgaming.pyxisapi.data.handle.PyxisTypeHandle;
-import com.starl0stgaming.pyxisapi.data.node.type.data.PyxisType;
+import com.starl0stgaming.pyxisapi.data.handle.PyxisNodeDefinition;
 import com.starl0stgaming.pyxisapi.data.node.validation.PyxisNodeValidator;
-import com.starl0stgaming.pyxisapi.data.node.validation.PyxisTypeValidator;
 import com.starl0stgaming.pyxisapi.data.node.validation.exception.PyxisInvalidTypeException;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
 import java.util.HashMap;
@@ -15,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PyxisNodeRegistry {
-    private HashMap<ResourceLocation, PyxisNodeHandle> nodes;
+    private HashMap<Identifier, PyxisNodeDefinition> nodes;
 
     public PyxisNodeRegistry() {
         this.nodes = new HashMap<>();
@@ -26,14 +23,14 @@ public class PyxisNodeRegistry {
 
     }
 
-    public void onReload(Map<ResourceLocation, PyxisNode> map) {
+    public void onReload(Map<Identifier, PyxisNode> map) {
         if(!this.validateData(map)) return;
         this.propagateUpdate();
     }
 
-    private boolean validateData(Map<ResourceLocation, PyxisNode> map) {
+    private boolean validateData(Map<Identifier, PyxisNode> map) {
         try {
-            Map<ResourceLocation, PyxisNodeHandle> temp = map.entrySet().stream()
+            Map<Identifier, PyxisNodeDefinition> temp = map.entrySet().stream()
                     .collect(Collectors.toMap(
                             Map.Entry::getKey,
                             e -> PyxisNodeValidator.validateNodes(e.getValue())
@@ -55,7 +52,7 @@ public class PyxisNodeRegistry {
         PyxisAPI.LOGGER.info("[PyxisAPI] Loaded level event");
     }
 
-    public HashMap<ResourceLocation, PyxisNodeHandle> getNodeMap() {
+    public HashMap<Identifier, PyxisNodeDefinition> getNodeMap() {
         return nodes;
     }
 }

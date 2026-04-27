@@ -1,7 +1,7 @@
 package com.starl0stgaming.pyxisapi.data.node.validation;
 
 import com.starl0stgaming.pyxisapi.PyxisAPI;
-import com.starl0stgaming.pyxisapi.data.handle.PyxisNodeHandle;
+import com.starl0stgaming.pyxisapi.data.handle.PyxisNodeDefinition;
 import com.starl0stgaming.pyxisapi.data.handle.PyxisTypeHandle;
 import com.starl0stgaming.pyxisapi.data.handle.type.EnumStateDef;
 import com.starl0stgaming.pyxisapi.data.node.PyxisNode;
@@ -9,7 +9,7 @@ import com.starl0stgaming.pyxisapi.data.node.validation.exception.PyxisInvalidNo
 import com.starl0stgaming.pyxisapi.data.node.validation.exception.PyxisInvalidStateException;
 
 public class PyxisNodeValidator {
-    public static PyxisNodeHandle validateNodes(PyxisNode node) {
+    public static PyxisNodeDefinition validateNodes(PyxisNode node) {
         if(node.meta().node().toString().isBlank()) throw new PyxisInvalidNodeException(
                 "Field 'node' for a node is empty! Check declarations, can't specify without 'node' declared"
         );
@@ -56,7 +56,7 @@ public class PyxisNodeValidator {
 
         //TODO: add event validation
         PyxisAPI.LOGGER.info("[Pyxis Node Validator] Pyxis Node " + node.meta().name() + " passed validation checks");
-        return new PyxisNodeHandle(
+        return new PyxisNodeDefinition(
                 node.meta().node(),
                 node.meta().type(),
                 node.render().states(),

@@ -2,7 +2,7 @@ package com.starl0stgaming.pyxisapi.core;
 
 import com.starl0stgaming.pyxisapi.PyxisAPI;
 import com.starl0stgaming.pyxisapi.data.node.PyxisNodeRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -43,10 +43,10 @@ public class CommonEvents {
 
     @SubscribeEvent
     public static void registerReloadListener(AddServerReloadListenersEvent event) {
-        event.addListener(ResourceLocation.fromNamespaceAndPath(
+        event.addListener(Identifier.fromNamespaceAndPath(
                 PyxisAPI.MODID, "pyxis_type_loader"
         ), PyxisAPI.pyxisTypeLoader);
-        event.addListener(ResourceLocation.fromNamespaceAndPath(
+        event.addListener(Identifier.fromNamespaceAndPath(
                 PyxisAPI.MODID, "pyxis_node_loader"
         ), PyxisAPI.pyxisNodeLoader);
         PyxisAPI.LOGGER.info("Pyxis Node & Type loaders have been registered");

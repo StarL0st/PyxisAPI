@@ -2,7 +2,7 @@ package com.starl0stgaming.pyxisapi.data.node.state;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Map;
 import java.util.Optional;
@@ -17,13 +17,13 @@ public record PyxisNodeStateRender(
     );
 
     public record PyxisStateRenderInfo(
-            ResourceLocation model,
-            Optional<ResourceLocation> custom_renderer
+            Identifier model,
+            Optional<Identifier> custom_renderer
     ) {
         public static final Codec<PyxisStateRenderInfo> CODEC = RecordCodecBuilder.create(instance ->
                 instance.group(
-                        ResourceLocation.CODEC.fieldOf("model").forGetter(PyxisStateRenderInfo::model),
-                        ResourceLocation.CODEC.optionalFieldOf("custom_renderer").forGetter(PyxisStateRenderInfo::custom_renderer)
+                        Identifier.CODEC.fieldOf("model").forGetter(PyxisStateRenderInfo::model),
+                        Identifier.CODEC.optionalFieldOf("custom_renderer").forGetter(PyxisStateRenderInfo::custom_renderer)
                 ).apply(instance, PyxisStateRenderInfo::new)
         );
     }

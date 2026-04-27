@@ -2,26 +2,26 @@ package com.starl0stgaming.pyxisapi.data.handle;
 
 import com.starl0stgaming.pyxisapi.data.node.interaction.PyxisNodeHitbox;
 import com.starl0stgaming.pyxisapi.data.node.state.PyxisNodeStateRender.PyxisStateRenderInfo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.Map;
 
-public class PyxisNodeHandle {
+public class PyxisNodeDefinition {
     //meta
-    private final ResourceLocation node;
-    private final ResourceLocation type;
+    private final Identifier node;
+    private final Identifier type;
     private final Map<String, PyxisStateRenderInfo> states;
     private final List<PyxisNodeHitbox> hitboxes;
 
-    public PyxisNodeHandle(ResourceLocation node, ResourceLocation type, Map<String, PyxisStateRenderInfo> states, List<PyxisNodeHitbox> hitboxes) {
+    public PyxisNodeDefinition(Identifier node, Identifier type, Map<String, PyxisStateRenderInfo> states, List<PyxisNodeHitbox> hitboxes) {
         this.node = node;
         this.type = type;
         this.states = states;
         this.hitboxes = hitboxes;
     }
 
-    public ResourceLocation getNode() {
+    public Identifier getNode() {
         return node;
     }
 
@@ -29,7 +29,7 @@ public class PyxisNodeHandle {
         return this.states.get(state);
     }
 
-    public ResourceLocation getType() {
+    public Identifier getType() {
         return type;
     }
 

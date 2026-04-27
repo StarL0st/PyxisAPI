@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.starl0stgaming.pyxisapi.data.node.interaction.PyxisNodeHitbox;
 import com.starl0stgaming.pyxisapi.data.node.state.PyxisNodeStateRender;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 
@@ -23,15 +23,15 @@ public record PyxisNode(
     );
 
     public record PyxisNodeMeta(
-            ResourceLocation node,
+            Identifier node,
             String name,
-            ResourceLocation type
+            Identifier type
     ) {
         public static final Codec<PyxisNodeMeta> CODEC = RecordCodecBuilder.create(pyxisNodeMetaInstance ->
                 pyxisNodeMetaInstance.group(
-                        ResourceLocation.CODEC.fieldOf("node").forGetter(PyxisNodeMeta::node),
+                        Identifier.CODEC.fieldOf("node").forGetter(PyxisNodeMeta::node),
                         Codec.STRING.fieldOf("name").forGetter(PyxisNodeMeta::name),
-                        ResourceLocation.CODEC.fieldOf("type").forGetter(PyxisNodeMeta::type)
+                        Identifier.CODEC.fieldOf("type").forGetter(PyxisNodeMeta::type)
                 ).apply(pyxisNodeMetaInstance, PyxisNodeMeta::new));
     }
 }

@@ -20,7 +20,7 @@
       "id": "pyxisapi:button_click_hitbox",
       "interaction": "click",
       "aabb": [0.0, 0.0, 0.0, 1.0, 1.0, 1.0],
-      "on_interact": "press"
+      "on_interact": "pyxisapi:button_press_event"
     }
   ]
 }
